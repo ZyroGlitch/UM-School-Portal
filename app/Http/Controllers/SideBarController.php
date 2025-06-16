@@ -11,11 +11,11 @@ class SideBarController extends Controller
         return Inertia::render('dashboard');
     }
     
-    public function coreValues()  {
-        return Inertia::render('CoreValues/Index');
+    public function user_management()  {
+        return Inertia::render('User_Management/Index');
     }
 
-    public function enroll()  {
-        return Inertia::render('Enroll/Index');
+    public function subject_management()  {
+        return Inertia::render('Subject_Management/Index');
     }
 }

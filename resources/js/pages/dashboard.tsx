@@ -1,7 +1,8 @@
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
+import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
+import { UsersRound, MoveRight, BookOpenText } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -14,20 +15,53 @@ export default function Dashboard() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
-            <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 overflow-x-auto">
-                <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                    <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
+            {/* <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 overflow-x-auto">
+                
+            </div> */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4">
+                <div className="bg-green-500 min-h-[150px] rounded-lg shadow-lg text-white p-4 flex flex-col justify-between">
+                    <div className="flex justify-between">
+                        <div className="flex flex-col">
+                            <h2 className="text-3xl font-bold">5,000</h2>
+                            <h4 className="text-base">Total Students</h4>
+                        </div>
+
+                        <UsersRound className='w-[50px] h-[50px] bg-green-400 p-3 rounded-lg' />
                     </div>
-                    <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
+
+                    <Link href='#' className='flex justify-end'>
+                        <Label className='text-md flex items-center gap-2 hover:text-green-700'>More Information <MoveRight /></Label>
+                    </Link>
                 </div>
-                <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                    <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
+
+                <div className="bg-blue-500 min-h-[150px] rounded-lg shadow-lg text-white p-4 flex flex-col justify-between">
+                    <div className="flex justify-between">
+                        <div className="flex flex-col">
+                            <h2 className="text-3xl font-bold">100</h2>
+                            <h4 className="text-base">Total Professors</h4>
+                        </div>
+
+                        <UsersRound className='w-[50px] h-[50px] bg-blue-400 p-3 rounded-lg' />
+                    </div>
+
+                    <Link href='#' className='flex justify-end'>
+                        <Label className='text-md flex items-center gap-2 hover:text-blue-700'>More Information <MoveRight /></Label>
+                    </Link>
+                </div>
+
+                <div className="bg-yellow-500 min-h-[150px] rounded-lg shadow-lg text-white p-4 flex flex-col justify-between">
+                    <div className="flex justify-between">
+                        <div className="flex flex-col">
+                            <h2 className="text-3xl font-bold">10</h2>
+                            <h4 className="text-base">Total Programs</h4>
+                        </div>
+
+                        <BookOpenText className='w-[50px] h-[50px] bg-yellow-400 p-3 rounded-lg' />
+                    </div>
+
+                    <Link href='#' className='flex justify-end'>
+                        <Label className='text-md flex items-center gap-2 hover:text-yellow-700'>More Information <MoveRight /></Label>
+                    </Link>
                 </div>
             </div>
         </AppLayout>
