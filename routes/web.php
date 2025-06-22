@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('welcome');
+    return Inertia::render('Index');
 })->name('home');
 
 Route::post('/authentication', [AuthController::class,'authentication'])
@@ -17,11 +17,24 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard',[SideBarController::class,'dashboard'])
     ->name('dashboard');
     
-    Route::get('/user_management',[SideBarController::class,'user_management'])
+    // ----------------------------------------------------------------------
+
+    Route::get('/user_management/role/{role}',[SideBarController::class,'user_management'])
     ->name('sidebar.user_management');
 
-    Route::get('/user_management/add_user',[UserManagementController::class,'add_user'])
-    ->name('user_management.add_user');
+    Route::get('/user_management/add_student',[UserManagementController::class,'add_student'])
+    ->name('user_management.add_student');
+
+    Route::post('/user_management/add_student/store',[UserManagementController::class,'store_student'])
+    ->name('user_management.store_student');
+
+    Route::get('/user_management/add_professor',[UserManagementController::class,'add_professor'])
+    ->name('user_management.add_professor');
+
+    Route::post('/user_management/add_professor/store',[UserManagementController::class,'store_professor'])
+    ->name('user_management.store_professor');
+    
+     // ----------------------------------------------------------------------
 
     Route::get('/subject_management',[SideBarController::class,'subject_management'])
     ->name('sidebar.subject_management');

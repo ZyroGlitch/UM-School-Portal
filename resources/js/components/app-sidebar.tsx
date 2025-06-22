@@ -15,7 +15,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Users',
-        href: '/user_management',
+        href: '/user_management/role/students',
         icon: UsersRound,
     },
     {

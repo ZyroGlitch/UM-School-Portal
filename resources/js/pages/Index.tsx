@@ -5,8 +5,12 @@ import logo from '../../../public/assets/logo.png';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { useEffect } from 'react';
+import Swal from 'sweetalert2';
 
-export default function Welcome() {
+export default function Index() {
+
+    const { flash } = usePage().props as unknown as { flash: { error?: string, success?: string } };
 
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
@@ -21,6 +25,24 @@ export default function Welcome() {
             }
         });
     }
+
+    useEffect(() => {
+        if (flash.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: flash.success,
+                confirmButtonColor: '#28a745'
+            });
+        } else if (flash.error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: flash.error,
+                confirmButtonColor: '#dc3545'
+            });
+        }
+    }, [flash]);
 
     return (
         <div>
@@ -57,6 +79,13 @@ export default function Welcome() {
                                         onChange={(e) => setData('email', e.target.value)}
                                     />
 
+                                    {
+                                        errors.email && (
+                                            <p className='text-red-500 text-sm mt-[0.5rem]'>
+                                                {errors.email}
+                                            </p>
+                                        )
+                                    }
                                 </div>
                                 <div className="mb-[1rem]">
                                     <Input
@@ -66,6 +95,14 @@ export default function Welcome() {
                                         value={data.password}
                                         onChange={(e) => setData('password', e.target.value)}
                                     />
+
+                                    {
+                                        errors.password && (
+                                            <p className='text-red-500 text-sm mt-[0.5rem]'>
+                                                {errors.password}
+                                            </p>
+                                        )
+                                    }
                                 </div>
 
                                 <Link href='#' className="flex justify-end mb-[1.5rem]">
