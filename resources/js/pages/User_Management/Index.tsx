@@ -94,22 +94,22 @@ export default function Index({ students, professors, activeTab }: { students: a
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead className='font-semibold'>Student ID</TableHead>
+                            {activeTab === 'students' && <TableHead className='font-semibold'>Student ID</TableHead>}
                             <TableHead className="w-100 font-semibold">Name</TableHead>
                             <TableHead className='font-semibold'>Age</TableHead>
                             <TableHead className='font-semibold'>Sex</TableHead>
                             <TableHead className="w-100 font-semibold">Birth Place</TableHead>
                             <TableHead className="w-100 font-semibold">Birth Date</TableHead>
-                            {students?.length > 0 && <TableHead className='font-semibold'>Year</TableHead>}
+                            {activeTab === 'students' && <TableHead className='font-semibold'>Year</TableHead>}
                             <TableHead className='font-semibold'>Department</TableHead>
-                            <TableHead className='font-semibold'>Program</TableHead>
+                            {activeTab === 'students' && <TableHead className='font-semibold'>Program</TableHead>}
                             <TableHead className='font-semibold'>Status</TableHead>
                             <TableHead className='font-semibold'>Action</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {
-                            students?.length > 0 ? (
+                            students?.length > 0 && (
                                 students.map((student) => (
                                     <TableRow key={student.id}>
                                         <TableCell>{student.student_id}</TableCell>
@@ -135,19 +135,21 @@ export default function Index({ students, professors, activeTab }: { students: a
                                         </TableCell>
                                     </TableRow>
                                 ))
-                            ) : (
+                            )
+                        }
+
+                        {
+                            professors?.length > 0 && (
                                 professors.map((professor) => (
                                     <TableRow key={professor.id}>
-                                        <TableCell>{professor.student_id}</TableCell>
                                         <TableCell>
-                                            {professor.firstname + ' ' + professor.middlename + ', ' + professor.surname}
+                                            Prof. {professor.firstname + ' ' + professor.middlename + ', ' + professor.surname}
                                         </TableCell>
                                         <TableCell>{professor.age}</TableCell>
                                         <TableCell>{professor.sex}</TableCell>
                                         <TableCell>{professor.birth_place}</TableCell>
                                         <TableCell>{professor.birth_date}</TableCell>
                                         <TableCell>{professor.department}</TableCell>
-                                        <TableCell>{professor.program}</TableCell>
                                         <TableCell>{professor.status}</TableCell>
                                         <TableCell className='flex items-center gap-2'>
                                             <Button className='bg-yellow-200 text-dark hover:bg-yellow-300'>
@@ -162,6 +164,18 @@ export default function Index({ students, professors, activeTab }: { students: a
                                 ))
                             )
                         }
+
+                        {students?.length === 0 && activeTab === 'students' && (
+                            <TableRow>
+                                <TableCell colSpan={10} className='text-center text-xl'>No student records found.</TableCell>
+                            </TableRow>
+                        )}
+
+                        {professors?.length === 0 && activeTab === 'professors' && (
+                            <TableRow>
+                                <TableCell colSpan={10} className='text-center text-xl'>No professor records found.</TableCell>
+                            </TableRow>
+                        )}
                     </TableBody>
                 </Table>
             </div>

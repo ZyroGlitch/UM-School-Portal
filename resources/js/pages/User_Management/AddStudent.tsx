@@ -18,7 +18,7 @@ import { toast, Toaster } from 'sonner';
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'User Management / Add Student',
-        href: '/user_management/add_user',
+        href: '/user_management/add_student',
     },
 ];
 

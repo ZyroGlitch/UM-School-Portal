@@ -7,6 +7,7 @@ use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use Str;
 
@@ -39,12 +40,12 @@ class UserManagementController extends Controller
         $lastname_lowerCase = strtolower(str_replace(' ', '', $fields['lastname']));
     
         $new_user = User::create([
-            'email' => $firstname_lowerCase . '.' . $lastname_lowerCase . '.' . $idNumber . '@gmail.com',
-            'password' => Hash::make($fields['lastname'] . '$' . $idNumber),
+            'email' => $firstname_lowerCase . '.' . $lastname_lowerCase . '.' . $idNumber . '@sksu.edu.ph',
+            'password' => Hash::make($fields['lastname']. $firstname_lowerCase . '$' . $idNumber),
             'role' => 'Student',
         ]);
     
-        $store = Student::create([
+        $student = Student::create([
             'user_id' => $new_user->id,
             'student_id' => $idNumber,
             'firstname' => $fields['firstname'],
@@ -59,7 +60,22 @@ class UserManagementController extends Controller
             'program' => $fields['program'],
         ]);
 
-        if($store){
+        if($student){
+            $data = [
+                'name' => $student->firstname . ' ' . $student->lastname,
+                'email' => $new_user->email,
+                'student_id' => $idNumber,
+                'password' => $fields['lastname'] . $firstname_lowerCase . '$' . $idNumber,
+                'role' => 'Student',
+            ];
+
+            Mail::send('email_template',$data, function($message) {
+                $message->to('glitchzyro@gmail.com', 'Glitchzyro')
+                    ->subject('Sultan Kudarat State University - Student Account');
+                $message->from('j.buliag.530734@umindanao.edu.ph', 'SKSU - Administration');
+            });
+            
+
             return redirect()->route('user_management.add_student')
             ->with('success', 'Student information added successfully!');
         } else {
@@ -93,12 +109,12 @@ class UserManagementController extends Controller
         $lastname_lowerCase = strtolower(str_replace(' ', '', $fields['lastname']));
     
         $new_user = User::create([
-            'email' => $firstname_lowerCase . '.' . $lastname_lowerCase . '.' . $idNumber . '@gmail.com',
-            'password' => Hash::make($fields['lastname'] . '$' . $idNumber),
+            'email' => $firstname_lowerCase . '.' . $lastname_lowerCase . '.' . $idNumber . '@sksu.edu.ph',
+            'password' => Hash::make($fields['lastname'] . $firstname_lowerCase . '$' . $idNumber),
             'role' => 'Professor',
         ]);
     
-        $store = Professor::create([
+        $professor = Professor::create([
             'user_id' => $new_user->id,
             'firstname' => $fields['firstname'],
             'middlename' => $fields['middlename'],
@@ -111,7 +127,21 @@ class UserManagementController extends Controller
             'date_hired' => now(),
         ]);
 
-        if($store){
+        if($professor){
+            $data = [
+                'name' => $professor->firstname . ' ' . $professor->lastname,
+                'email' => $new_user->email,
+                'student_id' => '',
+                'password' => $fields['lastname'] . $firstname_lowerCase . '$' . $idNumber,
+                'role' => 'Professor',
+            ];
+
+            Mail::send('email_template',$data, function($message) {
+                $message->to('glitchzyro@gmail.com', 'Glitchzyro')
+                    ->subject('Sultan Kudarat State University - Professor Account');
+                $message->from('j.buliag.530734@umindanao.edu.ph', 'SKSU - Administration');
+            });
+
             return redirect()->route('user_management.add_professor')
             ->with('success', 'Professor information added successfully!');
         } else {
